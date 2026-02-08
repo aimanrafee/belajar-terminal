@@ -24,6 +24,14 @@ int main() {
             printf(RED "Shutting down CLF Git OS...\n" RESET);
             break;
         } 
+        else if(strcmp(command, "clear") == 0) {
+            printf("\e[1;1H\e[2J");
+        }
+        else if(strcmp(command, "pasir") == 0) {
+            printf(YEL "\n[ INFO ] " RESET "Segala kehebatan 2nm ini bermula dari sebutir pasir.\n");
+            printf("Tanpa Silika, tiada Transistor. Tanpa Transistor, tiada Kod.\n");
+            printf("Ingatlah asal-usul teknologi.\n\n");
+        }
         else if(strcmp(command, "ver") == 0) {
             printf(WHT "CLF Git OS " GRN "v1.0" RESET " [Full Stack Ground Zero Edition]\n");
         } 
@@ -33,6 +41,8 @@ int main() {
             printf(" - " CYN "about" RESET " : The vision of this OS\n");
             printf(" - " CYN "ver" RESET "   : Display OS version\n");
             printf(" - " CYN "fetch" RESET " : Show system info & logo\n");
+            printf(" - " CYN "clear" RESET " : Clean the screen\n");
+            printf(" - " CYN "pasir" RESET " : Secret origin info\n");
             printf(" - " CYN "exit" RESET "  : Shutdown OS\n\n");
         }
         else if(strcmp(command, "about") == 0) {
