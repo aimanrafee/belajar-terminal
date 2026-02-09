@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLF Git OS | Antara Muka 2050</title>
+    <style>
+        /* Kesan Visual Terminal */
+        :root {
+            --neon-green: #39ff14;
+            --dark-bg: #0a0a0a;
+            --terminal-font: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-green);
+            font-family: var(--terminal-font);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Scanline Effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+
+        .terminal-window {
+            width: 90%;
+            max-width: 900px;
+            height: 80vh;
+            border: 2px solid var(--neon-green);
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            position: relative;
+            background: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+        }
+
+        .header {
+            border-bottom: 2px solid var(--neon-green);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+        }
+
+        .output {
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .input-area {
+            display: flex;
+            margin-top: 20px;
+        }
+
+        .prompt {
+            margin-right: 10px;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            color: var(--neon-green);
+            font-family: var(--terminal-font);
+            font-size: 1rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-green);
+        }
+    </style>
+</head>
+<body>
+
+<div class="terminal-window">
+    <div class="header">
+        <div class="stats-bar">
+            <span>SISTEM: CLF Git OS v1.2</span>
+            <span>STATUS: OFFLINE</span>
+            <span id="clock">MASA: --:--:--</span>
+        </div>
+        <div style="font-weight: bold; font-size: 1.2rem;">
+            PENGADAPTASI UNIVERSAL (LAPTOP & MOBIL) - AKTIF
+        </div>
+    </div>
+
+    <div class="output" id="log">
+[INFO] Memulakan Algoritma Pintar Luar Talian...
+[INFO] Memuatkan folder ensiklopedia... OK
+[INFO] Mengimbas src/ (C 98.2%)... OK
+[INFO] Sistem sedia. Selamat kembali, Pentadbir.
+
+Taip 'bantuan' untuk melihat senarai arahan.
+    </div>
+
+    <div class="input-area">
+        <span class="prompt">aimanrafee@CLF-OS:~$</span>
+        <input type="text" id="cli" autofocus autocomplete="off">
+    </div>
+</div>
+
+<script>
+    const log = document.getElementById('log');
+    const input = document.getElementById('cli');
+
+    // Fungsi Jam
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('clock').innerText = `MASA: ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    }
+    setInterval(updateClock, 1000);
+
+    // Logik Arahan Terminal
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const command = input.value.toLowerCase();
+            const newLine = document.createElement('div');
+            newLine.innerHTML = `<span style="color: white;">> ${command}</span>`;
+            log.appendChild(newLine);
+
+            let response = "";
+            switch(command) {
+                case 'bantuan':
+                    response = "Arahan Tersedia: \n- 'info': Maklumat repo\n- 'status': Status bateri/adaptor\n- 'bersih': Padam log\n- '2050': Visi Projek";
+                    break;
+                case 'info':
+                    response = "Repo: belajar-terminal\nBahasa: C (98.2%), Makefile (1.8%)\nMisi: Membina sistem operasi pintar berasaskan HTML.";
+                    break;
+                case 'status':
+                    response = "Status Pengadaptasi Universal: V1.2\nKeserasian: Laptop & Peranti Mudah Alih\nMod: Pintar Luar Talian.";
+                    break;
+                case '2050':
+                    response = "Visi 2050: Mencapai autonomi penuh dalam algoritma luar talian menggunakan struktur HTML dan C yang efisien.";
+                    break;
+                case 'bersih':
+                    log.innerHTML = "[Sistem Dibersihkan]";
+                    break;
+                default:
+                    response = "Arahan tidak dikenali. Taip 'bantuan'.";
+            }
+
+            const resLine = document.createElement('div');
+            resLine.innerText = response;
+            log.appendChild(resLine);
+            
+            input.value = '';
+            document.querySelector('.terminal-window').scrollTop = document.querySelector('.terminal-window').scrollHeight;
+        }
+    });
+</script>
+
+</body>
+</html>
